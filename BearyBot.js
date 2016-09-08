@@ -23,7 +23,32 @@ class Msg {
         else return this.markdown;
     }
 
-    AddImg(imgUrl) {
+    Channel(arg) {
+        if (arg) return this.channel = arg;
+        else return this.channel;
+    }
+
+    User(arg) {
+        if (arg) return this.user = arg;
+        else return this.user;
+    }
+
+    AttachTitle(arg) {
+        if (arg) return this.attachments[0].title = arg;
+        else return this.attachments[0].title;
+    }
+
+    AttachText(arg) {
+        if (arg) return this.attachments[0].text = arg;
+        else return this.attachments[0].text;
+    }
+
+    AttachColor(arg) {
+        if (arg) return this.attachments[0].color = arg;
+        else return this.attachments[0].color;
+    }
+
+    Img(imgUrl) {
         this.attachments[0].images = [{
             url: imgUrl
         }]
@@ -44,7 +69,7 @@ class Bot {
         }
     }
 
-    Send(someMsg) {
+    Send(someMsg, callback) {
         console.log(JSON.stringify(someMsg));
         var req = http.request(this.reqOpt);
         req.on('aborted', () => {
@@ -52,6 +77,13 @@ class Bot {
         });
         req.end(JSON.stringify(someMsg), 'utf8', () => {
             console.log(`Message Sent.`);
+        });
+        req.on('response', (res) => {
+            console.log(`Msg was received. Response: [${res.statusCode}]`);
+            res.pipe(process.stdout);
+            res.on('end', e => {
+                callback && callback(res);
+            });
         });
     }
 }
