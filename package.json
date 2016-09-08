@@ -1,0 +1,11 @@
+{
+  "name": "beary-chat-robot",
+  "version": "0.0.1",
+  "description": "Custom WebHook Robot for BearyChat",
+  "main": "main.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "rocka",
+  "license": "ISC"
+}
