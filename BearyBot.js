@@ -1,4 +1,7 @@
-const http = require('http');
+'use strict';
+
+const http = require('https');
+const url = require('url');
 
 class Msg {
     constructor(msgObj) {
@@ -37,13 +40,20 @@ class Msg {
 
 class Bot {
     constructor(WebHookUrl) {
+        let hookPath = url.parse(WebHookUrl);
         this.reqOpt = {
-            hostname: WebHookUrl
+            protocol: hookPath.protocol,
+            method: 'POST',
+            hostname: hookPath.hostname,
+            path:hookPath.path,
+            headers: {
+                'content-type': 'application/json'
+            }
         }
     }
 
     Send(someMsg) {
-        var req = http.request(reqOpt);
+        var req = http.request(this.reqOpt);
         req.on('aborted', () => {
             console.log(`Message aborted by server :(`);
         });
