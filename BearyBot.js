@@ -5,13 +5,12 @@ const url = require('url');
 
 class Msg {
     constructor(msgObj) {
+        if (!msgObj) return this;
         this.text = msgObj.text || '';
         this.markdown = msgObj.markdown || '';
         this.channel = msgObj.channel || '';
         this.user = msgObj.user || '';
-        if (msgObj.attachments) {
-            this.attachments = msgObj.attachments || '';
-        }
+        this.attachments = msgObj.attachments || new Array();
     }
 
     Text(arg) {
@@ -25,16 +24,9 @@ class Msg {
     }
 
     AddImg(imgUrl) {
-        if (this.attachments.images) {
-            this.attachments.images.push(imgUrl);
-        } else if (this.attachments) {
-            this.attachments.images = new Array();
-            this.attachments.images.push(imgUrl);
-        } else {
-            this.attachments = new Array();
-            this.attachments.images = new Array();
-            this.attachments.images.push(imgUrl);
-        }
+        this.attachments[0].images = [{
+            url: imgUrl
+        }]
     }
 }
 
@@ -45,7 +37,7 @@ class Bot {
             protocol: hookPath.protocol,
             method: 'POST',
             hostname: hookPath.hostname,
-            path:hookPath.path,
+            path: hookPath.path,
             headers: {
                 'content-type': 'application/json'
             }
@@ -53,6 +45,7 @@ class Bot {
     }
 
     Send(someMsg) {
+        console.log(JSON.stringify(someMsg));
         var req = http.request(this.reqOpt);
         req.on('aborted', () => {
             console.log(`Message aborted by server :(`);
