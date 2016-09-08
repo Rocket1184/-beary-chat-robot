@@ -1,3 +1,7 @@
+# beary-chat-robot
+
+使用Node.js编写的BearyChat机器人。
+
 ## 格式说明
 以下两种方式 BearyChat 都可以接受：
 
@@ -28,7 +32,7 @@
 }
 ```
 
-z## 字段含义
+## 字段含义
 
 ### 顶层字段
 
