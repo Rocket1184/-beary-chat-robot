@@ -1,5 +1,7 @@
 # beary-chat-robot
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/Rocket1184/beary-chat-robot.svg)](https://greenkeeper.io/)
+
 使用Node.js编写的BearyChat机器人。
 
 ## 格式说明
